@@ -2,7 +2,7 @@
 
 A full-featured event management system built with Next.js 15, TypeScript, and Zustand.
 
-## live link: 
+## live link: https://event-management-system-sm.vercel.app/
 
 ## Features
 
