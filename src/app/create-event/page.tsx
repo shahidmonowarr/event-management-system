@@ -17,9 +17,6 @@ export default function CreateEvent() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
-        Create New Event
-      </h1>
       <EventForm onSubmit={handleSubmit} />
     </div>
   );
