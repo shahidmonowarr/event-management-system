@@ -1,8 +1,6 @@
 import { useEventStore } from "@/app/store/eventStore";
+import { creatorId } from "@/app/utils/constants";
 import { NextRequest, NextResponse } from "next/server";
-
-// Mock user ID for demonstration
-const MOCK_USER_ID = "user-123";
 
 export async function GET() {
   const events = useEventStore.getState().events;
@@ -23,7 +21,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Add event to store
-    useEventStore.getState().addEvent(body, MOCK_USER_ID);
+    useEventStore.getState().addEvent(body, creatorId);
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
