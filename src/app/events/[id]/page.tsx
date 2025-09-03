@@ -12,13 +12,16 @@ export default function EventDetails() {
   const eventId = params.id as string;
   const getEventById = useEventStore((state) => state.getEventById);
   const [event, setEvent] = useState<Event | null>(null);
+  const rsvpToEvent = useEventStore((state) => state.rsvpToEvent);
+  // Subscribe to store updates to get the latest event data
+  const events = useEventStore((state) => state.events);
 
   useEffect(() => {
     if (eventId) {
       const foundEvent = getEventById(eventId);
       setEvent(foundEvent || null);
     }
-  }, [eventId, getEventById]);
+  }, [eventId, getEventById, events]);
 
   if (!event) {
     return (
@@ -33,6 +36,10 @@ export default function EventDetails() {
       </div>
     );
   }
+
+  const handleRSVP = () => {
+    rsvpToEvent(event.id);
+  };
 
   return (
     <div className="max-w-5xl mx-auto">
@@ -122,7 +129,14 @@ export default function EventDetails() {
             </div>
           </div>
 
-          <div className="mt-8">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={handleRSVP}
+              className="px-6 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+            >
+              RSVP to this event
+            </button>
+
             <Link
               href="/"
               className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"

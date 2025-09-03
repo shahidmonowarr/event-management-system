@@ -8,12 +8,14 @@ interface EventCardProps {
   event: Event;
   showActions?: boolean;
   onDelete?: (id: string) => void;
+  onRSVP?: (id: string) => void;
 }
 
 const EventCard = ({
   event,
   showActions = false,
   onDelete,
+  onRSVP,
 }: EventCardProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow">
@@ -92,6 +94,15 @@ const EventCard = ({
           </div>
 
           <div className="flex space-x-2">
+            {onRSVP && (
+              <button
+                onClick={() => onRSVP(event.id)}
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+              >
+                RSVP
+              </button>
+            )}
+
             <Link
               href={`/events/${event.id}`}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"

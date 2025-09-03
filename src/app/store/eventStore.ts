@@ -9,6 +9,7 @@ interface EventStore {
   deleteEvent: (id: string) => void;
   getUserEvents: (creatorId: string) => Event[];
   getEventById: (id: string) => Event | undefined;
+  rsvpToEvent: (id: string) => void;
 }
 
 // Load events from localStorage
@@ -67,5 +68,15 @@ export const useEventStore = create<EventStore>((set, get) => ({
 
   getEventById: (id: string) => {
     return get().events.find((event) => event.id === id);
+  },
+
+  rsvpToEvent: (id: string) => {
+    set((state) => {
+      const updatedEvents = state.events.map((event) =>
+        event.id === id ? { ...event, attendees: event.attendees + 1 } : event
+      );
+      saveEvents(updatedEvents);
+      return { events: updatedEvents };
+    });
   },
 }));

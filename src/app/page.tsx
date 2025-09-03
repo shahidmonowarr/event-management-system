@@ -11,6 +11,7 @@ export default function Home() {
   const [filteredEvents, setFilteredEvents] = useState<Event[]>(events);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const rsvpToEvent = useEventStore((state) => state.rsvpToEvent);
 
   useEffect(() => {
     setFilteredEvents(events);
@@ -34,6 +35,10 @@ export default function Home() {
     setFilteredEvents(result);
   }, [events, searchTerm, selectedCategory]);
 
+  const handleRSVP = (id: string) => {
+    rsvpToEvent(id);
+  };
+
   return (
     <div className="mx-auto max-w-5xl">
       <div className="mb-8">
@@ -45,7 +50,7 @@ export default function Home() {
           <div className="flex-1">
             <input
               type="text"
-              placeholder="Search events..."
+              placeholder="Search events by title..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -78,7 +83,7 @@ export default function Home() {
       ) : (
         <div className="grid grid-cols-1 gap-6">
           {filteredEvents.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <EventCard key={event.id} event={event} onRSVP={handleRSVP} />
           ))}
         </div>
       )}
