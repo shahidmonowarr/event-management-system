@@ -33,7 +33,7 @@ export default function MyEvents() {
       {userEvents.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-500 text-lg mb-4">
-            You haven't created any events yet.
+            You haven&apos;t created any events yet.
           </p>
           <Link
             href="/create-event"
