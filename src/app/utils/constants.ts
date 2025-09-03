@@ -10,3 +10,5 @@ export const CATEGORIES = [
   "Exhibition",
   "Other",
 ];
+
+export const creatorId = "user-123";

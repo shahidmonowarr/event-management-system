@@ -4,16 +4,15 @@ import { useRouter } from "next/navigation";
 import { useEventStore } from "../store/eventStore";
 import { EventFormData } from "../types/event";
 import EventForm from "../conponents/EventForm";
+import { creatorId } from "../utils/constants";
 
 export default function CreateEvent() {
   const router = useRouter();
   const addEvent = useEventStore((state) => state.addEvent);
 
-  const creatorId = "user-123";
-
   const handleSubmit = (formData: EventFormData) => {
     addEvent(formData, creatorId);
-    router.push("/");
+    router.push("/my-events");
   };
 
   return (
