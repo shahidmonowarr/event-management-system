@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Event } from "../types/event";
 import { formatDateTime } from "../utils/helpers";
 
@@ -90,7 +91,23 @@ const EventCard = ({
             <span>{event.attendees} attending</span>
           </div>
 
-          <div>
+          <div className="flex space-x-2">
+            <Link
+              href={`/events/${event.id}`}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              View Details
+            </Link>
+
+            {showActions && (
+              <Link
+                href={`/events/${event.id}/edit`}
+                className="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700 transition-colors"
+              >
+                Edit
+              </Link>
+            )}
+
             {showActions && onDelete && (
               <button
                 onClick={() => onDelete(event.id)}

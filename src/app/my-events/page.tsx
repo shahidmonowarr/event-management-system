@@ -19,7 +19,7 @@ export default function MyEvents() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-5xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800">My Events</h1>
         <Link
