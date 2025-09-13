@@ -2,7 +2,7 @@
 
 import React from "react";
 import DatePickerLib from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 
 export function DatePicker({
   date,
