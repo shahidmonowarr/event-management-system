@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { DatePicker } from "../../components/ui/date-picker";
 import { EventFormData } from "../types/event";
 import { CATEGORIES } from "../utils/constants";
 
@@ -15,6 +16,7 @@ const EventForm = ({
   initialData,
   isEditing = false,
 }: EventFormProps) => {
+  // Keep formData.date as string, use dateObj for DatePicker
   const [formData, setFormData] = useState<EventFormData>(
     initialData || {
       title: "",
@@ -23,6 +25,10 @@ const EventForm = ({
       location: "",
       category: "",
     }
+  );
+  // Date object for DatePicker
+  const [dateObj, setDateObj] = useState<Date | undefined>(
+    initialData && initialData.date ? new Date(initialData.date) : undefined
   );
 
   const [errors, setErrors] = useState<Partial<EventFormData>>({});
@@ -39,6 +45,18 @@ const EventForm = ({
     // Clear error when user starts typing
     if (errors[name as keyof EventFormData]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  // For shadcn DatePicker
+  const handleDateChange = (date: Date | undefined) => {
+    setDateObj(date);
+    setFormData((prev) => ({
+      ...prev,
+      date: date ? date.toISOString() : "",
+    }));
+    if (errors.date) {
+      setErrors((prev) => ({ ...prev, date: "" }));
     }
   };
 
@@ -197,34 +215,8 @@ const EventForm = ({
                   >
                     Date and Time *
                   </label>
-                  <div className="relative">
-                    <input
-                      type="datetime-local"
-                      id="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-                        errors.date
-                          ? "border-red-300 bg-red-50"
-                          : "border-gray-200 hover:border-gray-300 focus:bg-white"
-                      }`}
-                    />
-                    <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                      <svg
-                        className="w-5 h-5 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
+                  <div>
+                    <DatePicker date={dateObj} setDate={handleDateChange} />
                   </div>
                   {errors.date && (
                     <p className="flex items-center text-sm text-red-600">
